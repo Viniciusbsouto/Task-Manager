@@ -6,10 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint .",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "prepare": "husky",
-    "test": "echo \"No tests yet\""
+    "prepare": "husky"
   },
   "dependencies": {
     "react": "^19.1.1",
@@ -20,6 +19,7 @@
     "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.7",
     "@vitejs/plugin-react": "^5.0.0",
+    "autoprefixer": "^10.4.19",
     "eslint": "^9.33.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react-hooks": "^5.2.0",
@@ -28,7 +28,9 @@
     "globals": "^16.3.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.1.6",
+    "postcss": "^8.4.38",
     "prettier": "^3.6.2",
+    "tailwindcss": "^3.4.4",
     "vite": "^7.1.2"
   }
 }
