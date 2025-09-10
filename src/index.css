@@ -130,6 +130,6 @@
   }
 
   body {
-    @apply bg-brand-background;
+    @apply bg-[#f8f8f8];
   }
 }
