@@ -64,7 +64,7 @@ const Tasks = () => {
           <h2 className="text-xl font-semibold">Minhas Tarefas</h2>
         </div>
         <div className="flex items-center gap-4">
-          <Button variant="secondary">
+          <Button variant="ghost">
             Limpar tarefas
             <TrashIcon />
           </Button>
@@ -74,7 +74,10 @@ const Tasks = () => {
             <AddIcon />
           </Button>
 
-          <AddTaskDialog isOpen={addTaskDialogIsOpen} />
+          <AddTaskDialog
+            isOpen={addTaskDialogIsOpen}
+            handleClose={() => setAddTaskDialogIsOpen(false)}
+          />
         </div>
       </div>
 
