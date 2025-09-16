@@ -3,6 +3,7 @@ import "./AddTaskDialog.css";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { CSSTransition } from "react-transition-group";
+import { toast } from "sonner";
 import { v4 } from "uuid";
 
 import Button from "./Button";
@@ -16,6 +17,9 @@ const AddTaskDialog = ({ isOpen, handleClose, handleSubmit }) => {
   const nodeRef = useRef();
 
   const handleSaveClick = () => {
+    if (!title.trim() || !description.trim()) {
+      return toast.error("Por favor, preencha todos os campos.");
+    }
     handleSubmit({
       id: v4(),
       title,
@@ -29,7 +33,7 @@ const AddTaskDialog = ({ isOpen, handleClose, handleSubmit }) => {
   useEffect(() => {
     if (!isOpen) {
       setTitle("");
-      setTime("");
+      setTime("morning");
       setDescription("");
     }
   }, [isOpen]);
