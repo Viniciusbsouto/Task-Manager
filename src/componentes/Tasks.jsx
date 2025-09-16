@@ -28,6 +28,11 @@ const Tasks = () => {
     toast.success("Tarefa removida com sucesso!");
   };
 
+  const handleAddTaskSubmit = (task) => {
+    setTasks([...tasks, task]);
+    toast.success("Tarefa adicionada com sucesso!");
+  };
+
   const handleTaskCheckboxClick = (taskId) => {
     const newTasks = tasks.map((task) => {
       if (task.id !== taskId) {
@@ -77,6 +82,7 @@ const Tasks = () => {
           <AddTaskDialog
             isOpen={addTaskDialogIsOpen}
             handleClose={() => setAddTaskDialogIsOpen(false)}
+            handleSubmit={handleAddTaskSubmit}
           />
         </div>
       </div>
