@@ -10,24 +10,28 @@ import Input from "./Input";
 import TimeSelect from "./TimeSelect";
 
 const AddTaskDialog = ({ isOpen, handleClose, handleSubmit }) => {
-  const [title, setTitle] = useState();
+  // Uncontrolled inputs for title and description
   const [time, setTime] = useState("morning");
-  const [description, setDescription] = useState();
   const [errors, setErrors] = useState([]);
 
   const nodeRef = useRef();
+  const titleRef = useRef();
+  const descriptionRef = useRef();
 
   const handleSaveClick = () => {
     const newErrors = [];
 
-    if (!title.trim()) {
+    const currentTitle = titleRef.current?.value ?? "";
+    const currentDescription = descriptionRef.current?.value ?? "";
+
+    if (!currentTitle.trim()) {
       newErrors.push({
         inputName: "title",
         message: "O título é obrigatório!",
       });
     }
 
-    if (!description.trim()) {
+    if (!currentDescription.trim()) {
       newErrors.push({
         inputName: "description",
         message: "A descrição é obrigatória!",
@@ -37,13 +41,14 @@ const AddTaskDialog = ({ isOpen, handleClose, handleSubmit }) => {
     setErrors(newErrors);
 
     if (newErrors.length > 0) {
+      setErrors(newErrors);
       return;
     }
 
     handleSubmit({
       id: v4(),
-      title,
-      description,
+      title: currentTitle,
+      description: currentDescription,
       time,
       status: "to-do",
     });
@@ -52,9 +57,14 @@ const AddTaskDialog = ({ isOpen, handleClose, handleSubmit }) => {
 
   useEffect(() => {
     if (!isOpen) {
-      setTitle("");
+      // ensure time resets; uncontrolled inputs will be reset by setting defaultValue
       setTime("morning");
-      setDescription("");
+      setErrors([]);
+    } else {
+      // When opened, focus the title input
+      setTimeout(() => {
+        titleRef.current?.focus();
+      }, 0);
     }
   }, [isOpen]);
 
@@ -90,9 +100,9 @@ const AddTaskDialog = ({ isOpen, handleClose, handleSubmit }) => {
                   label="Título"
                   id="title"
                   placeholder="Insira o Título da Tarefa"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
+                  defaultValue=""
                   errorMessage={titleError?.message}
+                  ref={titleRef}
                 />
 
                 <TimeSelect
@@ -103,9 +113,9 @@ const AddTaskDialog = ({ isOpen, handleClose, handleSubmit }) => {
                   id="description"
                   label="Descrição"
                   placeholder="Descreva a Tarefa"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
+                  defaultValue=""
                   errorMessage={descriptionError?.message}
+                  ref={descriptionRef}
                 />
 
                 <div className="flex gap-3">
