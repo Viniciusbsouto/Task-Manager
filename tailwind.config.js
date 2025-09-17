@@ -15,7 +15,7 @@ export default {
           "light-gray": "#EEEEEE",
           white: "#FFFFFF",
           background: "#F8F8F8",
-          border: "#F4F4F5",
+          border: "#ECECEC",
           process: "#FFAA04",
           danger: "#EF4444",
         },

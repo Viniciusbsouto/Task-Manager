@@ -5,9 +5,9 @@ const TaskItem = ({ task, handleCheckboxClick, handleDeleteClick }) => {
   const getStatusClasses = () => {
     switch (task.status) {
       case "done":
-        return "bg-[#00ADB5] text-[#00ADB5] opacity-60 line-through ";
+        return "bg-brand-primary text-brand-primary opacity-60 line-through ";
       case "in-progress":
-        return "bg-[#FFAA04] text-[#FFAA04]";
+        return "bg-brand-process text-brand-process";
       case "to-do":
         return "bg-gray-800 text-gray-800";
       default:
@@ -43,7 +43,7 @@ const TaskItem = ({ task, handleCheckboxClick, handleDeleteClick }) => {
 
       <div className="flex items-center">
         <Button variant="ghost" onClick={() => handleDeleteClick(task.id)}>
-          <TrashIcon className="text-[#9A9C9F]" />
+          <TrashIcon className="text-brand-text-gray" />
         </Button>
 
         <a href="#" className="transition-opacity hover:opacity-75">
