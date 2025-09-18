@@ -1,8 +1,8 @@
-const SidebarButton = ({ children, variant }) => {
+const SidebarButton = ({ children, color }) => {
   const getVariantClasses = () => {
-    if (variant === "unselected") {
+    if (color === "unselected") {
       return "text-brand-dark-blue hover:bg-gray-200 ";
-    } else if (variant === "selected") {
+    } else if (color === "selected") {
       return "bg-[#E6F7F8] text-brand-primary hover:bg-[#D1F0F1]";
     }
   };
