@@ -1,20 +1,6 @@
 {
   "tasks": [
     {
-      "id": "1",
-      "title": "Comprar leite",
-      "time": "morning",
-      "description": "abcde",
-      "status": "done"
-    },
-    {
-      "id": "2",
-      "title": "Reunião com equipe",
-      "time": "afternoon",
-      "description": "abcde",
-      "status": "in-progress"
-    },
-    {
       "id": "3",
       "title": "Estudar React",
       "time": "evening",
@@ -22,25 +8,18 @@
       "status": "to-do"
     },
     {
-      "id": "4",
-      "title": "Exercícios físicos",
+      "id": "9974bd60-d998-411e-9351-b15a560c8b8d",
+      "title": "Teste 3",
+      "description": "Teste 3",
       "time": "morning",
-      "description": "abcde",
       "status": "to-do"
     },
     {
-      "id": "5",
-      "title": "Ler um livro",
+      "id": "fbeb788e-2451-46a8-b72a-33c7dcf170a1",
+      "title": "Teste 2",
+      "description": "sdg",
       "time": "afternoon",
-      "description": "abcde",
-      "status": "done"
-    },
-    {
-      "id": "6",
-      "title": "Planejar viagem",
-      "time": "evening",
-      "description": "abcde",
-      "status": "in-progress"
+      "status": "to-do"
     }
   ]
 }
