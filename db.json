@@ -41,27 +41,6 @@
       "time": "evening",
       "description": "abcde",
       "status": "in-progress"
-    },
-    {
-      "id": "a8e1ae41-77b8-4762-9dc0-8b9a7a1153f0",
-      "title": "Teste",
-      "description": "Teste",
-      "time": "afternoon",
-      "status": "to-do"
-    },
-    {
-      "id": "b482fc9d-9a9a-45be-ab44-850aa1be4620",
-      "title": "teste",
-      "description": "teste",
-      "time": "morning",
-      "status": "to-do"
-    },
-    {
-      "id": "d5df7e23-a7d6-4ecd-88ca-a6d3859a5db9",
-      "title": "Teste",
-      "description": "Teste",
-      "time": "evening",
-      "status": "to-do"
     }
   ]
 }
