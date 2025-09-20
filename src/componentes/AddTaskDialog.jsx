@@ -3,22 +3,26 @@ import "./AddTaskDialog.css";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { CSSTransition } from "react-transition-group";
+import { toast } from "sonner";
 import { v4 } from "uuid";
 
+import { LoaderIcon } from "../assets/icons";
 import Button from "./Button";
 import Input from "./Input";
 import TimeSelect from "./TimeSelect";
 
-const AddTaskDialog = ({ isOpen, handleClose, handleSubmit }) => {
+const AddTaskDialog = ({ isOpen, handleClose, onsubmitSuccess }) => {
   // Uncontrolled inputs for title and description
   const [time, setTime] = useState("morning");
   const [errors, setErrors] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const nodeRef = useRef();
   const titleRef = useRef();
   const descriptionRef = useRef();
 
-  const handleSaveClick = () => {
+  const handleSaveClick = async () => {
+    setIsLoading(true);
     const newErrors = [];
 
     const currentTitle = titleRef.current?.value ?? "";
@@ -45,13 +49,26 @@ const AddTaskDialog = ({ isOpen, handleClose, handleSubmit }) => {
       return;
     }
 
-    handleSubmit({
+    const task = {
       id: v4(),
       title: currentTitle,
-      description: currentDescription,
       time,
+      description: currentDescription,
       status: "to-do",
+    };
+    const response = await fetch("http://localhost:3000/tasks", {
+      method: "POST",
+      body: JSON.stringify(task),
     });
+    if (!response.ok) {
+      setIsLoading(false);
+
+      return toast.success("Erro ao adicionar tarefa.");
+    }
+
+    onsubmitSuccess(task);
+    setIsLoading(false);
+
     handleClose();
   };
 
@@ -131,7 +148,9 @@ const AddTaskDialog = ({ isOpen, handleClose, handleSubmit }) => {
                     onClick={handleSaveClick}
                     size="large"
                     className="w-full"
+                    disabled={isLoading}
                   >
+                    {isLoading && <LoaderIcon className="animate-spin" />}
                     Salvar
                   </Button>
                 </div>
