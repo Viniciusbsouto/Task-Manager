@@ -74,7 +74,7 @@ const TaskDetailsPage = () => {
 
     if (!response.ok) {
       setIsLoading(false);
-      throw new Error("Erro ao atualizar tarefa");
+      return toast.error("Erro ao atualizar tarefa");
     }
 
     navigate(-1);
@@ -84,7 +84,7 @@ const TaskDetailsPage = () => {
 
     setTask(updatedTask);
     setEditedTask(updatedTask);
-    toast.success("Tarefa Atualizada com sucesso");
+    return toast.success("Tarefa Atualizada com sucesso");
   };
 
   const handleDelete = async () => {
@@ -96,13 +96,13 @@ const TaskDetailsPage = () => {
     if (!response.ok) {
       setIsLoading(false);
 
-      throw new Error("Erro ao deletar a tarefa");
+      return toast.error("Erro ao deletar a tarefa");
     }
 
     setIsLoading(false);
 
     navigate(-1);
-    toast.success("Tarefa apagada com sucesso");
+    return toast.success("Tarefa deletada com sucesso");
   };
 
   const titleError = errors.find((error) => error.inputName === "title");
