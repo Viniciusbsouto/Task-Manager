@@ -22,7 +22,6 @@ const AddTaskDialog = ({ isOpen, handleClose, onsubmitSuccess }) => {
   const descriptionRef = useRef();
 
   const handleSaveClick = async () => {
-    setIsLoading(true);
     const newErrors = [];
 
     const currentTitle = titleRef.current?.value ?? "";
@@ -42,12 +41,12 @@ const AddTaskDialog = ({ isOpen, handleClose, onsubmitSuccess }) => {
       });
     }
 
-    setErrors(newErrors);
-
     if (newErrors.length > 0) {
       setErrors(newErrors);
       return;
     }
+
+    setIsLoading(true);
 
     const task = {
       id: v4(),
