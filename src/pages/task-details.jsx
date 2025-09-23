@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 
 import {
@@ -16,14 +17,13 @@ import TimeSelect from "../componentes/TimeSelect";
 const TaskDetailsPage = () => {
   const { taskId } = useParams();
   const [task, setTask] = useState();
-  const [editedTask, setEditedTask] = useState({
-    title: "",
-    description: "",
-    time: "",
-  });
-  const [isLoading, setIsLoading] = useState(false);
-  const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
+  const {
+    register,
+    formState: { errors, isSubmitting },
+    handleSubmit,
+    reset,
+  } = useForm();
 
   useEffect(() => {
     const fetchTask = async () => {
@@ -32,83 +32,48 @@ const TaskDetailsPage = () => {
       });
       const data = await response.json();
       setTask(data);
-      setEditedTask(data);
+      reset(data);
     };
     fetchTask();
-  }, [taskId]);
+  }, [taskId, reset]);
 
-  const handleChange = (field, value) => {
-    setEditedTask((prev) => ({ ...prev, [field]: value }));
-  };
-
-  const handleSaveEdited = async () => {
-    const newErrors = [];
-
-    if (!editedTask.title) {
-      newErrors.push({
-        inputName: "title",
-        message: "O título é obrigatório!",
-      });
-    }
-
-    if (!editedTask.description) {
-      newErrors.push({
-        inputName: "description",
-        message: "A descrição é obrigatória!",
-      });
-    }
-
-    if (newErrors.length > 0) {
-      setErrors(newErrors);
-      return;
-    }
-    setIsLoading(true);
-
+  const handleSaveEdited = async (data) => {
     const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(editedTask),
+      body: JSON.stringify({
+        title: data.title.trim(),
+        time: data.time.trim(),
+        description: data.description.trim(),
+      }),
     });
 
     if (!response.ok) {
-      setIsLoading(false);
       return toast.error("Erro ao atualizar tarefa");
     }
 
     navigate(-1);
     const updatedTask = await response.json();
 
-    setIsLoading(false);
-
     setTask(updatedTask);
-    setEditedTask(updatedTask);
     return toast.success("Tarefa Atualizada com sucesso");
   };
 
   const handleDelete = async () => {
-    setIsLoading(true);
     const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
       method: "DELETE",
     });
 
     if (!response.ok) {
-      setIsLoading(false);
-
       return toast.error("Erro ao deletar a tarefa");
     }
-
-    setIsLoading(false);
 
     navigate(-1);
     return toast.success("Tarefa deletada com sucesso");
   };
 
-  const titleError = errors.find((error) => error.inputName === "title");
-  const descriptionError = errors.find(
-    (error) => error.inputName === "description",
-  );
   return (
     <div className="flex">
       <Sidebar />
@@ -142,9 +107,9 @@ const TaskDetailsPage = () => {
             className="h-fit self-end"
             color="danger"
             onClick={handleDelete}
-            disabled={isLoading}
+            disabled={isSubmitting}
           >
-            {isLoading ? (
+            {isSubmitting ? (
               <LoaderIcon className="animate-spin" />
             ) : (
               <TrashIcon />
@@ -152,44 +117,72 @@ const TaskDetailsPage = () => {
             Deletar Tarefa
           </Button>
         </div>
-        {/* Dados Da Tarefa */}
-        <div className="space-y-6 rounded-xl bg-brand-white p-6">
-          <div>
-            <Input
-              id="title"
-              label="Título"
-              value={editedTask?.title}
-              onChange={(e) => handleChange("title", e.target.value)}
-              errorMessage={titleError?.message}
-            />
+        <form onSubmit={handleSubmit(handleSaveEdited)}>
+          {/* Dados Da Tarefa */}
+          <div className="space-y-6 rounded-xl bg-brand-white p-6">
+            {/* Input do título */}
+            <div>
+              <Input
+                id="title"
+                label="Título"
+                {...register("title", {
+                  required: "O título é obrigatório!",
+                  validate: (value) => {
+                    if (!value.trim) {
+                      return "O título é obrigatório!";
+                    }
+                    return true;
+                  },
+                })}
+                errorMessage={errors?.title?.message}
+              />
+            </div>
+            {/* Input do horário */}
+            <div>
+              <TimeSelect
+                {...register("time", {
+                  required: "O horário é obrigatório!",
+                  validate: (value) => {
+                    if (!value.trim) {
+                      return "O horário é obrigatório!";
+                    }
+                    return true;
+                  },
+                })}
+                errorMessage={errors?.time?.message}
+              />
+            </div>
+            {/* Input da descrição */}
+            <div>
+              <Input
+                label="Descrição"
+                id="description"
+                {...register("description", {
+                  required: "A descrição é obrigatória!",
+                  validate: (value) => {
+                    if (!value.trim) {
+                      return "A descrição é obrigatória!";
+                    }
+                    return true;
+                  },
+                })}
+                errorMessage={errors?.description?.message}
+              />
+            </div>
           </div>
-          <div>
-            <TimeSelect
-              value={editedTask?.time}
-              onChange={(e) => handleChange("time", e.target.value)}
-            />
+          {/* Botão de Salvar */}
+          <div className="flex w-full justify-end gap-3">
+            <Button
+              color="primary"
+              size="large"
+              type="submit"
+              disabled={isSubmitting}
+            >
+              {isSubmitting && <LoaderIcon className="animate-spin" />}
+              Salvar
+            </Button>
           </div>
-          <div>
-            <Input
-              label="Descrição"
-              id="description"
-              value={editedTask?.description}
-              onChange={(e) => handleChange("description", e.target.value)}
-              errorMessage={descriptionError?.message}
-            />
-          </div>
-        </div>
-        <div className="flex w-full justify-end gap-3">
-          <Button
-            color="primary"
-            size="large"
-            onClick={handleSaveEdited}
-            disabled={isLoading}
-          >
-            {isLoading && <LoaderIcon className="animate-spin" />}
-            Salvar
-          </Button>
-        </div>
+        </form>
       </div>
     </div>
   );

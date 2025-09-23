@@ -2,9 +2,9 @@
   "tasks": [
     {
       "id": "a2ae985c-ff12-4786-9bd5-9336267d1635",
-      "title": "Academia",
+      "title": "Academia (clínica)",
       "time": "morning",
-      "description": "Treinar",
+      "description": "Treinar Peito 3",
       "status": "to-do"
     },
     {
@@ -12,6 +12,13 @@
       "title": "Estudar",
       "time": "afternoon",
       "description": "sdfsdf",
+      "status": "to-do"
+    },
+    {
+      "id": "e11a1c1f-caad-4685-9e76-26b9b5b9b2dc",
+      "title": "Depositar Cheque",
+      "time": "evening",
+      "description": "Depositar Cheque de R$2000",
       "status": "to-do"
     }
   ]
