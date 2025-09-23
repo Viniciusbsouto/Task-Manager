@@ -14,6 +14,7 @@ const Button = ({
         primary: "bg-brand-primary text-white hover:bg-[#019AA0]",
         secondary: "bg-brand-light-gray text-brand-dark-blue hover:bg-gray-300",
         ghost: "bg-transparent text-brand-dark-gray hover:bg-gray-200",
+        danger: "bg-brand-danger text-brand-white hover:bg-opacity-70",
       },
       size: {
         small: "py-1 text-xs",
