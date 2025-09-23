@@ -4,7 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeftIcon, ChevronRightIcon, TrashIcon } from "../assets/icons";
 import Button from "../componentes/Button";
 import Input from "../componentes/Input";
-import InputLabel from "../componentes/InputLabel";
 import Sidebar from "../componentes/Sidebar";
 import TimeSelect from "../componentes/TimeSelect";
 
