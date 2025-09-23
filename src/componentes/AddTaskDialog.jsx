@@ -43,12 +43,16 @@ const AddTaskDialog = ({ isOpen, handleClose, onsubmitSuccess }) => {
     onsubmitSuccess(task);
 
     handleClose();
+    reset({ title: "", description: "", time: "morning" });
   };
 
   useEffect(() => {
     if (!isOpen) {
       // ensure time resets; uncontrolled inputs will be reset by setting defaultValue
-      reset({ title: "", description: "", time: "morning" });
+      reset(
+        { title: "", description: "", time: "morning" },
+        { keepErrors: false },
+      );
     } else {
       // When opened, focus the title input
       setTimeout(() => {
@@ -134,6 +138,7 @@ const AddTaskDialog = ({ isOpen, handleClose, onsubmitSuccess }) => {
                       className="w-full"
                       color="secondary"
                       onClick={handleClose}
+                      type="button"
                     >
                       Cancelar
                     </Button>
