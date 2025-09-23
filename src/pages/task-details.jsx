@@ -143,13 +143,12 @@ const TaskDetailsPage = () => {
                 {...register("time", {
                   required: "O horário é obrigatório!",
                   validate: (value) => {
-                    if (!value.trim) {
+                    if (!value.trim()) {
                       return "O horário é obrigatório!";
                     }
                     return true;
                   },
                 })}
-                errorMessage={errors?.time?.message}
               />
             </div>
             {/* Input da descrição */}
@@ -160,7 +159,7 @@ const TaskDetailsPage = () => {
                 {...register("description", {
                   required: "A descrição é obrigatória!",
                   validate: (value) => {
-                    if (!value.trim) {
+                    if (!value.trim()) {
                       return "A descrição é obrigatória!";
                     }
                     return true;
