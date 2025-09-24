@@ -3,7 +3,7 @@ export const useDeleteTask = (taskId) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationKey: ["deleteTask", taskId],
-    mutationFn: async (taskId) => {
+    mutationFn: async () => {
       const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
         method: "DELETE",
       });
@@ -14,7 +14,6 @@ export const useDeleteTask = (taskId) => {
       queryClient.setQueryData(["tasks"], (currentTasks = []) => {
         return currentTasks.filter((oldTask) => oldTask.id !== deletedTask.id);
       });
-      // Optionally, you can perform side effects here
     },
   });
 };
