@@ -1,13 +1,6 @@
 {
   "tasks": [
     {
-      "id": "a2ae985c-ff12-4786-9bd5-9336267d1635",
-      "title": "Academia (clínica)",
-      "time": "morning",
-      "description": "Treinar Peito 3",
-      "status": "to-do"
-    },
-    {
       "id": "0a6662d7-495f-477a-a459-d228b78dc0a8",
       "title": "Estudar",
       "time": "afternoon",
@@ -24,8 +17,8 @@
     {
       "id": "96dbe189-7e36-4370-b14b-dfef2d901a84",
       "title": "Ler Livros",
-      "time": "afternoon",
-      "description": "ssdfsd",
+      "time": "morning",
+      "description": "ssdfsdefgdfgdfgdf",
       "status": "to-do"
     }
   ]
