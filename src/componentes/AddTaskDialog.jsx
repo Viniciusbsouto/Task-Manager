@@ -1,5 +1,6 @@
 import "./AddTaskDialog.css";
 
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { useForm } from "react-hook-form";
@@ -12,7 +13,22 @@ import Button from "./Button";
 import Input from "./Input";
 import TimeSelect from "./TimeSelect";
 
-const AddTaskDialog = ({ isOpen, handleClose, onsubmitSuccess }) => {
+const AddTaskDialog = ({ isOpen, handleClose }) => {
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation({
+    mutationKey: ["addTask"],
+    mutationFn: async (newTask) => {
+      const response = await fetch("http://localhost:3000/tasks", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newTask),
+      });
+      if (!response.ok) {
+        throw new Error("Erro ao adicionar tarefa.");
+      }
+      return response.json();
+    },
+  });
   // Uncontrolled inputs for title and description
   const {
     register,
@@ -31,19 +47,20 @@ const AddTaskDialog = ({ isOpen, handleClose, onsubmitSuccess }) => {
       description: data.description.trim(),
       status: "to-do",
     };
-    const response = await fetch("http://localhost:3000/tasks", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(task),
+
+    mutate(task, {
+      onSuccess: () => {
+        queryClient.setQueryData(["tasks"], (currentTasks = []) => {
+          return [...currentTasks, task];
+        });
+        toast.success("Tarefa adicionada com sucesso!");
+        handleClose();
+        reset({ title: "", description: "", time: "morning" });
+      },
+      onError: () => {
+        toast.error("Erro ao adicionar tarefa.");
+      },
     });
-    if (!response.ok) {
-      return toast.error("Erro ao adicionar tarefa.");
-    }
-
-    onsubmitSuccess(task);
-
-    handleClose();
-    reset({ title: "", description: "", time: "morning" });
   };
 
   useEffect(() => {

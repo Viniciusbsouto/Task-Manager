@@ -17,7 +17,7 @@ import TasksSeparator from "./TasksSeparator";
 const Tasks = () => {
   const queryClient = useQueryClient();
   const { data: tasks } = useQuery({
-    queryKey: "tasks",
+    queryKey: ["tasks"],
     queryFn: async () => {
       const response = await fetch("http://localhost:3000/tasks", {
         method: "GET",
@@ -31,20 +31,6 @@ const Tasks = () => {
   const morningTasks = tasks?.filter((task) => task.time === "morning");
   const afternoonTasks = tasks?.filter((task) => task.time === "afternoon");
   const eveningTasks = tasks?.filter((task) => task.time === "evening");
-
-  const onDeleteTaskSuccess = async (taskId) => {
-    queryClient.setQueryData("tasks", (currentTasks) => {
-      return currentTasks.filter((task) => task.id !== taskId);
-    });
-    toast.success("Tarefa removida com sucesso!");
-  };
-
-  const onTaskSubmitSuccess = async (task) => {
-    queryClient.setQueryData("tasks", (currentTasks) => {
-      return [...currentTasks, task];
-    });
-    toast.success("Tarefa adicionada com sucesso!");
-  };
 
   const handleTaskCheckboxClick = (taskId) => {
     const newTasks = tasks.map((task) => {
@@ -95,7 +81,6 @@ const Tasks = () => {
           <AddTaskDialog
             isOpen={addTaskDialogIsOpen}
             handleClose={() => setAddTaskDialogIsOpen(false)}
-            onsubmitSuccess={onTaskSubmitSuccess}
           />
         </div>
       </div>
@@ -117,7 +102,6 @@ const Tasks = () => {
               key={task.id}
               task={task}
               handleCheckboxClick={handleTaskCheckboxClick}
-              onDeleteSuccess={onDeleteTaskSuccess}
             />
           ))}
         </div>
@@ -136,7 +120,6 @@ const Tasks = () => {
               key={task.id}
               task={task}
               handleCheckboxClick={handleTaskCheckboxClick}
-              onDeleteSuccess={onDeleteTaskSuccess}
             />
           ))}
         </div>
@@ -154,7 +137,6 @@ const Tasks = () => {
               key={task.id}
               task={task}
               handleCheckboxClick={handleTaskCheckboxClick}
-              onDeleteSuccess={onDeleteTaskSuccess}
             />
           ))}
         </div>
