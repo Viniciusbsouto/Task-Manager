@@ -1,15 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 export const useGetTask = ({ taskId, onSuccess }) => {
   return useQuery({
     queryKey: ["tasks", taskId],
     queryFn: async () => {
-      const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
-        method: "GET",
-      });
-      const data = await response.json();
-      onSuccess(data);
-      return data;
+      const { data: task } = await axios.get(
+        `http://localhost:3000/tasks/${taskId}`,
+      );
+      onSuccess(task);
+      return task;
     },
   });
 };
