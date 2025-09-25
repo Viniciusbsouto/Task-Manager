@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "../../lib/axios";
+import { tasksQueryKeys } from "../../keys/queries";
 export const useUpdateTask = (taskId) => {
   const queryClient = useQueryClient();
   return useMutation({
@@ -11,7 +12,7 @@ export const useUpdateTask = (taskId) => {
         description: data.description.trim(),
       });
 
-      queryClient.setQueryData(["tasks"], (oldTasks) => {
+      queryClient.setQueryData(tasksQueryKeys.getAll(), (oldTasks) => {
         return oldTasks.map((oldtask) => {
           if (oldtask.id === updatedTask.id) {
             return updatedTask;
@@ -19,6 +20,7 @@ export const useUpdateTask = (taskId) => {
           return oldtask;
         });
       });
+      queryClient.setQueryData(tasksQueryKeys.getOne(taskId), updatedTask);
       return updatedTask;
     },
   });
