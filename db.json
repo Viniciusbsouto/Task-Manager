@@ -5,20 +5,27 @@
       "title": "Estudar",
       "time": "afternoon",
       "description": "sdfsdf",
-      "status": "to-do"
-    },
-    {
-      "id": "e11a1c1f-caad-4685-9e76-26b9b5b9b2dc",
-      "title": "Depositar Cheque",
-      "time": "evening",
-      "description": "Depositar Cheque de R$2000",
-      "status": "to-do"
+      "status": "in_progress"
     },
     {
       "id": "96dbe189-7e36-4370-b14b-dfef2d901a84",
       "title": "Ler Livros",
       "time": "morning",
       "description": "ssdfsdefgdfgdfgdf",
+      "status": "done"
+    },
+    {
+      "id": "cb732eab-9fa4-458d-acfb-657e8b5bed5d",
+      "title": "Teste",
+      "time": "evening",
+      "description": "TEste",
+      "status": "to-do"
+    },
+    {
+      "id": "b0734b95-7ab4-49c8-bb22-5e45ec71aa2d",
+      "title": "Teste",
+      "time": "afternoon",
+      "description": "skjdbfysdf",
       "status": "to-do"
     }
   ]

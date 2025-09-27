@@ -1,4 +1,4 @@
-export const tasksQueryKeys = {
+export const taskQueryKeys = {
   getAll: () => ["tasks"],
   getOne: (taskId) => ["task", taskId],
 };

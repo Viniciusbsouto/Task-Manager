@@ -1,10 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
+
+import { taskQueryKeys } from "../../keys/queries";
 import { api } from "../../lib/axios";
-import { tasksQueryKeys } from "../../keys/queries";
 
 export const useGetTasks = () => {
   return useQuery({
-    queryKey: tasksQueryKeys.getAll(),
+    queryKey: taskQueryKeys.getAll(),
     queryFn: async () => {
       const { data: tasks } = await api.get("/tasks");
       return tasks;
