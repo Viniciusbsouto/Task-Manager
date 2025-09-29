@@ -1,7 +1,7 @@
 import "./AddTaskDialog.css";
 
 import PropTypes from "prop-types";
-import { useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { useForm } from "react-hook-form";
 import { CSSTransition } from "react-transition-group";
@@ -21,6 +21,7 @@ const AddTaskDialog = ({ isOpen, handleClose }) => {
     formState: { errors },
     handleSubmit,
     reset,
+    setFocus,
   } = useForm({
     defaultValues: {
       title: "",
@@ -56,14 +57,36 @@ const AddTaskDialog = ({ isOpen, handleClose }) => {
     );
   };
 
-  const handleCancelClick = () => {
+  const handleCancelClick = useCallback(() => {
     reset({
       title: "",
       time: "morning",
       description: "",
     });
     handleClose();
-  };
+  }, [reset, handleClose]);
+
+  // Auto-focus the title input when the dialog opens. Use a small timeout so
+  // the input has time to mount when CSSTransition is used. Also support
+  // closing the dialog with Escape.
+  useEffect(() => {
+    if (!isOpen) return undefined;
+
+    const t = setTimeout(() => setFocus("title"), 50);
+
+    const onKeyDown = (e) => {
+      if (e.key === "Escape") {
+        handleCancelClick();
+      }
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      clearTimeout(t);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [isOpen, setFocus, handleCancelClick]);
 
   return (
     <CSSTransition
@@ -78,9 +101,18 @@ const AddTaskDialog = ({ isOpen, handleClose }) => {
           <div
             ref={nodeRef}
             className="fixed bottom-0 left-0 top-0 flex h-screen w-screen items-center justify-center backdrop-blur"
+            onMouseDown={(e) => {
+              // if clicking the backdrop (outside dialog), close
+              if (e.target === e.currentTarget) {
+                handleCancelClick();
+              }
+            }}
           >
             {/* DIALOG */}
-            <div className="rounded-xl bg-white p-5 text-center shadow">
+            <div
+              className="rounded-xl bg-white p-5 text-center shadow"
+              onMouseDown={(e) => e.stopPropagation()}
+            >
               <h2 className="text-xl font-semibold text-brand-dark-blue">
                 Nova Tarefa
               </h2>
@@ -164,7 +196,6 @@ const AddTaskDialog = ({ isOpen, handleClose }) => {
 AddTaskDialog.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
 };
 
 export default AddTaskDialog;

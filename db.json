@@ -5,7 +5,7 @@
       "title": "Estudar",
       "time": "afternoon",
       "description": "Estudar React Router Dom",
-      "status": "done"
+      "status": "in_progress"
     },
     {
       "id": "96dbe189-7e36-4370-b14b-dfef2d901a84",
@@ -17,9 +17,9 @@
     {
       "id": "cb732eab-9fa4-458d-acfb-657e8b5bed5d",
       "title": "Teste",
-      "time": "morning",
+      "time": "evening",
       "description": "TEste",
-      "status": "done"
+      "status": "to-do"
     }
   ]
 }
