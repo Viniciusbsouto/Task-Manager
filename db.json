@@ -4,8 +4,8 @@
       "id": "0a6662d7-495f-477a-a459-d228b78dc0a8",
       "title": "Estudar",
       "time": "afternoon",
-      "description": "sdfsdf",
-      "status": "in_progress"
+      "description": "Estudar React Router Dom",
+      "status": "done"
     },
     {
       "id": "96dbe189-7e36-4370-b14b-dfef2d901a84",
@@ -17,16 +17,9 @@
     {
       "id": "cb732eab-9fa4-458d-acfb-657e8b5bed5d",
       "title": "Teste",
-      "time": "evening",
+      "time": "morning",
       "description": "TEste",
-      "status": "to-do"
-    },
-    {
-      "id": "b0734b95-7ab4-49c8-bb22-5e45ec71aa2d",
-      "title": "Teste",
-      "time": "afternoon",
-      "description": "skjdbfysdf",
-      "status": "to-do"
+      "status": "done"
     }
   ]
 }

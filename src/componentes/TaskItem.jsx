@@ -45,6 +45,9 @@ const TaskItem = ({ task }) => {
     if (task.status === "in_progress") {
       return "done";
     }
+    if (task.status === "done") {
+      return "to-do";
+    }
     return "to-do";
   };
 
